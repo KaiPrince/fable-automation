@@ -1,0 +1,14 @@
+name: Fable PR Action
+on:
+  pull_request:
+    types: [opened]
+  issue_comment:
+    types: [created]
+
+jobs:
+  fable:
+    runs-on: ubuntu-latest
+    name: Fable PR workflow
+    steps:
+      - name: Run Fable action
+        uses: Brightspace/fable-automation@main

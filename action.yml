@@ -1,0 +1,31 @@
+name: "Fable PR workflow"
+description: "Prompt developer to use Fable"
+inputs:
+  slack-webhook-url:
+    description: "URL of slack webhook for workflow"
+    default: ${{ secrets.slack-webhook-url }}
+  github-token:
+    description: The GitHub token used to create an authenticated client
+    default: ${{ github.token }}
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: Brightspace/third-party-actions@actions/checkout
+
+    - name: Setup Node
+      uses: Brightspace/third-party-actions@actions/setup-node
+      with:
+        cache: npm
+        node-version: 16
+
+    - name: Download dependencies
+      run: cd ${{github.action_path}} && npm ci
+      shell: bash
+
+    - name: Run action
+      run: node ${{ github.action_path }}/index.js
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        SLACK_WEBHOOK_URL: ${{ inputs.slack-webhook-url }}
