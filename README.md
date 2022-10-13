@@ -53,4 +53,6 @@ jobs:
     steps:
       - name: Run Fable action
         uses: KaiPrince/fable-automation@main
+        with:
+         slack-webhook-url: # REPLACE WITH YOUR OWN OR OMIT AND CONFIGURE IN SECRETS
 ```
